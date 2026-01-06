@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "compounds": [
+    {
+      "name": "Debug on Chrome",
+      "configurations": ["Vue CLI Serve (Develop Mode)", "Launch Chrome"]
+    }
+    {
+      "name": "Debug on edge",
+      "configurations": ["Vue CLI Serve (Develop Mode)", "Launch Microsoft Edge"]
+    }
+  ],
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome",
+      "url": "http://localhost:8080/top.html",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "Launch Microsoft Edge",
+      "type": "edge",
+      "request": "launch",
+      "url": "http://localhost:8080/top.html",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Vue CLI Serve (Develop Mode)",
+      "program": "${workspaceFolder}/node_modules/@vue/cli-service/bin/vue-cli-service.js",
+      "args": ["serve", "--port=8080"]
+    }
+  ]
+}

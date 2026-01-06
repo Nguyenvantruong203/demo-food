@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --display-resolution-width: 1920px;
+  --display-resolution-height: 1200px;
+
+  width: var(--display-resolution-width);
+  background-color: #000;
+}
+
+body {
+  width: var(--display-resolution-width);
+  height: var(--display-resolution-height);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+}
