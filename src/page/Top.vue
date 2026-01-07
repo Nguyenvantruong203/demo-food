@@ -10,11 +10,13 @@
 import { defineComponent } from 'vue';
 import { TopLogic } from '@/logic/page/TopLogic';
 import StartPage from '@/page/StartPage.vue';
+import DetailPage from '@/page/DetailPage.vue';
 
 export default defineComponent({
   name: 'top-page',
   components: {
     StartPage,
+    DetailPage,
   },
   setup() {
     let logic = new TopLogic();

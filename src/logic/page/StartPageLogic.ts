@@ -1,18 +1,44 @@
+import { Splash } from '@/model/Splash';
+import { SplashService } from '@/services/SplashService';
+import { EmitEvent, GlobalEvent, PageArgs } from '../common/GlobalEvent';
+import { PageStackType } from '@/model/PageStack';
+import { RuntimeStore } from '../common/RuntimeStore';
+
 export class StartPageLogic {
-  constructor() {
-    //
+  private service = new SplashService();
+
+  splashList: Splash[] = [];
+  currentIndex = 0;
+
+  async activate() {
+    this.splashList = await this.service.getList();
   }
 
-
-  async activate(): Promise<void> {
-    //
+  get current(): Splash | null {
+    return this.splashList[this.currentIndex] ?? null;
   }
 
-  deactivate(): void {
-    //
+  get title(): string {
+    return this.current?.title ?? '';
   }
 
-  async onSplashClick(): Promise<void> {
-    //
+  get content(): string {
+    return this.current?.content ?? '';
   }
+
+  get image(): string {
+    return this.current?.image ?? '';
+  }
+
+  onSplashClick = (item: Splash) => {
+    console.log('CLICK ID:', item.id);
+
+    RuntimeStore.currentSplashId = item.id;
+
+    GlobalEvent.Instance.emitEvent(
+      EmitEvent.ChangeScreen,
+      new PageArgs('detail-page', PageStackType.NoHistory)
+    );
+  };
+
 }
