@@ -3,6 +3,8 @@ import { PageStackType } from '@/model/PageStack';
 
 export enum EmitEvent {
   ChangeScreen = 'change-screen',
+  ShowDialog = 'show-dialog',
+  HideDialog = 'hide-dialog',
 }
 
 export class PageArgs {
@@ -52,12 +54,5 @@ export class GlobalEvent {
 
   public emitEvent(event: string, ...args: any[]) {
     this.eventBus.emit(event, ...args);
-  }
-
-  public showStartPage(type = PageStackType.NoHistory) {
-    this.eventBus.emit(
-      EmitEvent.ChangeScreen,
-      new PageArgs('start-page', type)
-    );
   }
 }

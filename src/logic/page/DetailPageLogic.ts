@@ -1,7 +1,8 @@
 import type { Splash } from '@/model/Splash';
 import { ServiceIF } from '@/services/ServiceIF';
-import { EmitEvent, GlobalEvent, PageArgs } from '@/logic/common/GlobalEvent';
-import { PageStackType } from '@/model/PageStack';
+import { PageArgs } from '@/logic/common/GlobalEvent';
+import { Navigation } from '../common/Navigation';
+import { DialogArgs, Interaction } from '../common/Interaction';
 
 export class DetailPageLogic {
 
@@ -19,9 +20,14 @@ export class DetailPageLogic {
     }
 
     onClickBack() {
-        GlobalEvent.Instance.emitEvent(
-            EmitEvent.ChangeScreen,
-            new PageArgs('start-page', PageStackType.NoHistory)
+        Interaction.showDialog(
+            new DialogArgs({
+                title: 'Confirm',
+                message: 'Bạn có chắc muốn quay lại?',
+                onConfirm: () => {
+                    Navigation.back();
+                },
+            })
         );
     }
 }
