@@ -1,4 +1,5 @@
 import { ref, Ref } from 'vue';
+import type { PageArgs } from '@/logic/common/GlobalEvent';
 
 export enum PageStackType {
   New = 'new',
@@ -11,11 +12,13 @@ export class PageStack {
   public static Instance: PageStack;
 
   public readonly currentPageName: Ref<string>;
+  public readonly currentPageArgs: Ref<PageArgs | null>;
 
   public pageStack: Ref<Array<string>>;
 
   constructor() {
     this.currentPageName = ref(this.topPage);
+    this.currentPageArgs = ref(null);
     this.pageStack = ref([]);
   }
 
@@ -30,8 +33,10 @@ export class PageStack {
   public manageStack(newPageName: string, type: PageStackType): void {
     switch (type) {
       case PageStackType.SingleTop: {
-        const index = this.pageStack.value.findIndex((n) => n == newPageName);
-        if (index != -1) {
+        const index = this.pageStack.value.findIndex(
+          (n) => n === newPageName
+        );
+        if (index !== -1) {
           this.pageStack.value.splice(index);
         }
         break;
@@ -47,8 +52,9 @@ export class PageStack {
     }
   }
 
-  public changeScreen(newPageName: string) {
+  public changeScreen(newPageName: string, args?: PageArgs) {
     this.currentPageName.value = newPageName;
+    this.currentPageArgs.value = args ?? null;
   }
 
   private get topPage(): string {

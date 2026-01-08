@@ -1,22 +1,20 @@
-import { SplashService } from '@/services/SplashService';
-import { RuntimeStore } from '@/logic/common/RuntimeStore';
 import type { Splash } from '@/model/Splash';
+import { ServiceIF } from '@/services/ServiceIF';
 import { EmitEvent, GlobalEvent, PageArgs } from '@/logic/common/GlobalEvent';
 import { PageStackType } from '@/model/PageStack';
 
 export class DetailPageLogic {
-    private service = new SplashService();
 
     data: Splash | null = null;
 
-    async activate() {
-        const splashId = RuntimeStore.currentSplashId;
+    activate(args?: PageArgs) {
+        const splashId = args?.Data?.splashId;
         if (!splashId) {
             this.data = null;
             return;
         }
 
-        const list = await this.service.getList();
+        const list = ServiceIF.getSplashList();
         this.data = list.find(x => x.id === splashId) ?? null;
     }
 

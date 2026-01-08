@@ -6,7 +6,7 @@
       { disabled }
     ]"
     :disabled="disabled"
-    @click="onClick"
+    @pointerup="onPointerUp"
   >
     <slot />
   </button>
@@ -20,21 +20,21 @@ export default defineComponent({
   props: {
     type: {
       type: String,
-      default: 'primary', // primary | accent | neutral | muted | soft
+      default: 'primary',
     },
     disabled: {
       type: Boolean,
       default: false,
     },
   },
-  emits: ['click'],
+  emits: ['confirm'],
   setup(props, { emit }) {
-    const onClick = () => {
+    const onPointerUp = () => {
       if (props.disabled) return;
-      emit('click');
+      emit('confirm');
     };
 
-    return { onClick };
+    return { onPointerUp };
   },
 });
 </script>

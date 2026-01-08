@@ -1,10 +1,15 @@
 import { IService } from './IService';
+import splashData from '@/dummy-data/SplashConfig.json';
 
 export class Mock implements IService {
-  constructor() {
-  }
 
   GetConfig(): string {
-    return '';
+    return JSON.stringify({
+      env: 'mock',
+    });
+  }
+
+  GetSplashList(): string {
+    return JSON.stringify(splashData);
   }
 }
