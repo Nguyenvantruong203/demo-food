@@ -6,27 +6,27 @@ export class TopLogic {
   public currentPageName: ComputedRef<string>;
 
   constructor() {
-    this.currentPageName = computed(() => {
-      return PageStack.Instance.currentPageName.value;
-    });
+    this.currentPageName = computed(
+      () => PageStack.Instance.currentPageName.value
+    );
+
     this.registerEvents();
   }
 
   private registerEvents(): void {
-    const globalEvent = GlobalEvent.Instance;
-
-    globalEvent.on(EmitEvent.ChangeScreen, (page: PageArgs) => {
-      this.handleChangeScreen(page.Name, page.Type);
-    });
+    GlobalEvent.Instance.on(
+      EmitEvent.ChangeScreen,
+      (page: PageArgs) => {
+        this.handleChangeScreen(page);
+      }
+    );
   }
 
-  private handleChangeScreen(name: string, type: PageStackType): void {
-    PageStack.Instance.manageStack(name, type);
+  private handleChangeScreen(page: PageArgs): void {
+    PageStack.Instance.manageStack(page.Name, page.Type);
 
-    if (PageStack.Instance.currentPageName.value != name) {
-      PageStack.Instance.changeScreen(name);
-    } else {
-      // do nothing
+    if (PageStack.Instance.currentPageName.value !== page.Name) {
+      PageStack.Instance.changeScreen(page.Name);
     }
   }
 }

@@ -1,18 +1,15 @@
+import { Splash } from '@/model/Splash';
+import { ServiceIF } from '@/services/ServiceIF';
+import { GlobalEvent } from '@/logic/common/GlobalEvent';
+
 export class StartPageLogic {
-  constructor() {
-    //
+  splashList: Splash[] = [];
+
+  activate() {
+    this.splashList = ServiceIF.getSplashList();
   }
 
-
-  async activate(): Promise<void> {
-    //
-  }
-
-  deactivate(): void {
-    //
-  }
-
-  async onSplashClick(): Promise<void> {
-    //
+  onSelectSplash(item: Splash) {
+    GlobalEvent.Instance.goToDetail({ splashId: item.id });
   }
 }

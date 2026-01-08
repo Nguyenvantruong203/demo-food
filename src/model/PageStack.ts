@@ -11,27 +11,28 @@ export class PageStack {
   public static Instance: PageStack;
 
   public readonly currentPageName: Ref<string>;
-
-  public pageStack: Ref<Array<string>>;
+  public pageStack: Ref<string[]>;
 
   constructor() {
-    this.currentPageName = ref(this.topPage);
+    this.currentPageName = ref(this.startPageName);
     this.pageStack = ref([]);
   }
 
-  public static async init() {
+  public static init() {
     this.Instance = new PageStack();
   }
 
   public clearStack(): void {
-    this.pageStack.value.splice(0);
+    this.pageStack.value.length = 0;
   }
 
   public manageStack(newPageName: string, type: PageStackType): void {
     switch (type) {
       case PageStackType.SingleTop: {
-        const index = this.pageStack.value.findIndex((n) => n == newPageName);
-        if (index != -1) {
+        const index = this.pageStack.value.findIndex(
+          (n) => n === newPageName
+        );
+        if (index !== -1) {
           this.pageStack.value.splice(index);
         }
         break;
@@ -41,7 +42,6 @@ export class PageStack {
         break;
       case PageStackType.NoHistory:
       case PageStackType.Back:
-        break;
       default:
         break;
     }
@@ -49,10 +49,6 @@ export class PageStack {
 
   public changeScreen(newPageName: string) {
     this.currentPageName.value = newPageName;
-  }
-
-  private get topPage(): string {
-    return this.startPageName;
   }
 
   public get startPageName(): string {
