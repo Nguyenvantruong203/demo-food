@@ -1,7 +1,7 @@
 <template>
   <div class="top-main">
     <keep-alive>
-      <component :is="currentPageName" :page-args="currentPageArgs" :key="currentPageName" />
+      <component :is="currentPageName"  :key="currentPageName" />
     </keep-alive>
 
     <GlobalDialog />
@@ -26,7 +26,6 @@ export default defineComponent({
     let logic = new TopLogic();
     return {
       currentPageName: logic.currentPageName,
-      currentPageArgs: logic.currentPageArgs,
     };
   },
 });

@@ -4,15 +4,10 @@ import { computed, ComputedRef } from 'vue';
 
 export class TopLogic {
   public currentPageName: ComputedRef<string>;
-  public currentPageArgs: ComputedRef<PageArgs | null>;
 
   constructor() {
     this.currentPageName = computed(
       () => PageStack.Instance.currentPageName.value
-    );
-
-    this.currentPageArgs = computed(
-      () => PageStack.Instance.currentPageArgs.value
     );
 
     this.registerEvents();
@@ -31,7 +26,7 @@ export class TopLogic {
     PageStack.Instance.manageStack(page.Name, page.Type);
 
     if (PageStack.Instance.currentPageName.value !== page.Name) {
-      PageStack.Instance.changeScreen(page.Name, page);
+      PageStack.Instance.changeScreen(page.Name);
     }
   }
 }

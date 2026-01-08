@@ -1,31 +1,30 @@
 import type { Splash } from '@/model/Splash';
 import { ServiceIF } from '@/services/ServiceIF';
-import { PageArgs } from '@/logic/common/GlobalEvent';
-import { Navigation } from '../common/Navigation';
-import { DialogArgs, Interaction } from '../common/Interaction';
+import { DialogArgs, GlobalEvent } from '@/logic/common/GlobalEvent';
 
 export class DetailPageLogic {
-
     data: Splash | null = null;
 
-    activate(args?: PageArgs) {
+    activate() {
+        const args = GlobalEvent.Instance.getCurrentPageArgs();
         const splashId = args?.Data?.splashId;
+
         if (!splashId) {
             this.data = null;
             return;
         }
 
-        const list = ServiceIF.getSplashList();
-        this.data = list.find(x => x.id === splashId) ?? null;
+        this.data = ServiceIF.getSplashList()
+            .find(x => x.id === splashId) ?? null;
     }
 
     onClickBack() {
-        Interaction.showDialog(
+        GlobalEvent.Instance.showDialog(
             new DialogArgs({
                 title: 'Confirm',
                 message: 'Bạn có chắc muốn quay lại?',
                 onConfirm: () => {
-                    Navigation.back();
+                    GlobalEvent.Instance.back();
                 },
             })
         );
